@@ -1,19 +1,17 @@
-import React, { useCallback } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { deleteNote } from '../redux/notesSlice';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import ButtonComponent from './ButtonComponent';
+import colors from '../utils/colors';
 
-const NoteItem = ({ note }) => {
-  const dispatch = useDispatch();
-
-  const handleDelete = useCallback(() => {
-    dispatch(deleteNote(note.id));
-  }, [dispatch, note.id]);
-
+const NoteItem = ({note, onDelete}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{note.content}</Text>
-      <Button title="Delete" onPress={handleDelete} />
+      <ButtonComponent
+        style={{backgroundColor: colors.red, alignSelf: 'center'}}
+        text="Delete"
+        onPress={onDelete}
+      />
     </View>
   );
 };
@@ -22,13 +20,16 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    marginBottom: 10,
+    backgroundColor: '#e6e6e6',
+    padding: 8,
+    borderRadius: 8,
   },
   text: {
     flex: 1,
-    alignSelf:'center'
+    alignSelf: 'center',
+    color: colors.black,
+    marginEnd: 10,
   },
 });
 

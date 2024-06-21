@@ -1,14 +1,23 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from './src/redux/store';
+import React, {useEffect} from 'react';
+import {Provider, useDispatch} from 'react-redux';
+import {store} from './src/redux/store';
 import NoteListScreen from './src/screens/NoteListScreen';
+import {loadNotes} from './src/redux/notesSlice';
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <NoteListScreen />
-    </Provider>
-  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadNotes());
+  }, [dispatch]);
+
+  return <NoteListScreen />;
 };
 
-export default App;
+const AppWithProvider = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+export default AppWithProvider;
